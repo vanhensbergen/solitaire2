@@ -1,0 +1,119 @@
+*{
+	padding:0;
+	margin:0;
+	box-sizing:border-box;
+	user-select: none;
+}
+main{
+	background-color:green;
+	display:flex;
+	flex-direction:column;
+	width:1000px;
+	margin:10px auto;
+}
+header{
+	font-size:50px;
+	color:lightgreen;
+	text-align:center;
+	flex-grow:1;
+	margin-top:5px;
+}
+.playfield{
+	display:flex;
+	flex-direction:row;
+	flex-grow:10;
+}
+.rows{
+	flex-grow:7;
+	display:flex;
+	flex-direction:row;
+	border: solid 1px white;
+
+}
+nav{
+	flex-grow:1;
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	
+}
+.rows>div, .stacks>div, .results>div{
+	flex-grow:1;
+	background-color: aquamarine;
+	height:150px;
+	border:2px solid green;
+	border-radius:5px;
+	position:relative;
+}
+.stacks{
+	flex-grow:1;
+	display:flex;
+	flex-direction:column;
+	height:300px;
+}
+.results{
+	flex-grow:1;
+	display:flex;
+	flex-direction:column;
+}
+.spades, .clovers, .hearts, .diamonds{
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.spades{
+	background-image: url("../img/spade.png");
+}
+.hearts{
+	background-image: url("../img/heart.png");
+}
+.diamonds{
+	background-image:url("../img/diamond.png");
+}
+.clovers{
+	background-image: url("../img/clover.png");
+}
+.card{
+	position:absolute;
+	left:0;
+	width:108px;
+	height:147px;
+	border-radius:5px;
+}
+.card>img{
+	width:100%;
+	height:100%;
+	border:none;
+}
+.hidden{
+	visibility:hidden;
+}
+
+nav>img {
+	height:50px;
+	border-radius:10px;
+}
+nav>img:hover{
+	cursor:pointer;
+	background-color:red;
+	
+}
+#round{
+	margin:5px;
+	height:50px;
+	background-color:lightblue;
+	font-weight:900;
+	font-size:3.0em;
+	text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em red;
+	color: white;
+	
+	text-align:center;
+	width:100px;
+	border-radius:10px;
+	
+}
+#ghostdiv>div{
+	box-shadow: 15px 15px 25px lightgray;
+}
+
