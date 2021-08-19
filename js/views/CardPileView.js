@@ -145,9 +145,9 @@ export default class CardPileView extends EventTarget{
 		//helaas is dat niet zo voor touchend dat blijft contact houden met de startplek
 		if(e.type === 'touchend'){
 			const containers = CardPileView.CARD_CONTAINERS;
-			let ID = -1;		
-			clientX = e.changedTouches[0].clientX;
-			clientY = e.changedTouches[0].clientY;
+			//let ID = -1;		
+			const clientX = e.changedTouches[0].clientX;
+			const clientY = e.changedTouches[0].clientY;
 			
 			let dropContainer = document.elementFromPoint(clientX, clientY);
 			if(dropContainer.tagName.toLowerCase()==='img'){//als je op een kaart klikt klik je op de img
