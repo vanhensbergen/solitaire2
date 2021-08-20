@@ -4,11 +4,74 @@
 	box-sizing:border-box;
 	user-select: none;
 }
+@media (min-width: 576px) { 
+	main{
+		width:576px;
+	} 
+	.card{
+		width:62px;
+		height:84px;
+	}
+	.rows>div, .stacks>div, .results>div{
+		height:84px;
+	} 
+	.stacks{
+		height:168px;
+	} 
+}
+
+
+@media (min-width: 768px)  { 
+	main{
+		width:768px;
+	}
+		
+	.card{
+		width:82px;
+		height:112px;
+	}
+	.rows>div, .stacks>div, .results>div{
+		height:112px;
+	} 
+	.stacks{
+		height:224px;	} 
+}
+@media (min-width: 992px) { 
+	main{
+		width:992px;
+	} 
+	.card{
+		width:107px;
+		height:145px;
+	}
+	.rows>div, .stacks>div, .results>div{
+		height:145px;
+	}
+	.stacks{
+		height:290px;
+	} 
+}
+@media (min-width: 1200px)  { 
+	main{
+		width:1050px;
+	}
+	.card{
+		width:114px;
+		height:155px;
+	}
+	.rows>div, .stacks>div, .results>div{
+		height:155px
+	} 
+	.stacks{
+		height:310px;
+	} 
+}
+
 main{
 	background-color:green;
 	display:flex;
 	flex-direction:column;
-	width:1000px;
+	/*width:100px;*/
 	margin:10px auto;
 }
 header{
@@ -41,7 +104,7 @@ nav{
 .rows>div, .stacks>div, .results>div{
 	flex-grow:1;
 	background-color: aquamarine;
-	height:150px;
+	/*height:150px;*/
 	border:2px solid green;
 	border-radius:5px;
 	position:relative;
@@ -50,7 +113,7 @@ nav{
 	flex-grow:1;
 	display:flex;
 	flex-direction:column;
-	height:300px;
+	/*height:300px;*/
 }
 .results{
 	flex-grow:1;
@@ -77,8 +140,8 @@ nav{
 .card{
 	position:absolute;
 	left:0;
-	width:108px;
-	height:147px;
+	/*width:108px;
+	height:147px;*/
 	border-radius:5px;
 }
 .card>img{
