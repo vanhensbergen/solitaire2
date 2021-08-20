@@ -88,10 +88,10 @@
 		height:calc(2*147/108*(var(--greatest-width)/9 - 2px));
 	} 
 	nav{
-		height:50px;
+		height:calc(50px*1300/1050);
 	}
 	header, #round{
-		font-size:50px;
+		font-size:calc(50px*1300/1050);
 	}
 
 }
