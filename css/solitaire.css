@@ -6,7 +6,7 @@
 	--smallest-width:768;
 	--small-width:992;
 	--great-width:1050;
-	--greatest-width: 1300;
+	--greatest-width: 1400;
 }
 @media (min-width: 768px)  { 
 	main{
@@ -79,7 +79,7 @@
 	}
 	.card{
 		width:calc(var(--greatest-width)/9*1px - 2px);
-		height:calc(147/108*(var(--greatest-width)/9*1-px- 2px));
+		height:calc(147/108*(var(--greatest-width)/9*1px - 2px));
 	}
 	.rows>div, .stacks>div, .results>div{
 		height:calc(147/108*(var(--greatest-width)/9*1px - 2px));
