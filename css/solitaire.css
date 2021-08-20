@@ -3,11 +3,35 @@
 	margin:0;
 	box-sizing:border-box;
 	user-select: none;
+	--xsmallest-width:730;
 	--smallest-width:768;
 	--small-width:992;
 	--great-width:1050;
 	--greatest-width: 1400;
 }
+
+@media (max-width: 768px)  { 
+	main{
+		width:calc(var(--xsmallest-width)*1px);
+	}
+	.card{
+		width:calc(var(--xsmallest-width)/9*1px - 2px);
+		height:calc(147/108*(var(--xsmallest-width)/9*1px - 2px));
+	}
+	.rows>div, .stacks>div, .results>div{
+		height:calc(147/108*(var(--xsmallest-width)/9*1px - 2px));
+	} 
+	.stacks{
+		height:calc(2*147/108*(var(--xsmallest-width)/9*1px - 2px));
+	} 
+	nav{
+		height:calc(50px*var(--xsmallest-width)/1050);
+	}
+	header, #round{
+		font-size:calc(50px*var(--xsmallest-width)/1050);
+	}
+}
+
 @media (min-width: 768px)  { 
 	main{
 		width:calc(var(--smallest-width)*1px);
