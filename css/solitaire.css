@@ -3,95 +3,95 @@
 	margin:0;
 	box-sizing:border-box;
 	user-select: none;
-	--smallest-width:768px;
-	--small-width:992px;
-	--great-width:1050px;
-	--greatest-width: 1300px;
+	--smallest-width:768;
+	--small-width:992;
+	--great-width:1050;
+	--greatest-width: 1300;
 }
 @media (min-width: 768px)  { 
 	main{
-		width:var(--smallest-width);
+		width:calc(var(--smallest-width)*1px);
 	}
 	.card{
-		width:calc(var(--smallest-width)/9 - 2px);
-		height:calc(147/108*(var(--smallest-width)/9 - 2px));
+		width:calc(var(--smallest-width)/9*1px - 2px);
+		height:calc(147/108*(var(--smallest-width)/9*1px - 2px));
 	}
 	.rows>div, .stacks>div, .results>div{
-		height:calc(147/108*(var(--smallest-width)/9 - 2px));
+		height:calc(147/108*(var(--smallest-width)/9*1px - 2px));
 	} 
 	.stacks{
-		height:calc(2*147/108*(var(--smallest-width)/9 - 2px));
+		height:calc(2*147/108*(var(--smallest-width)/9*1px - 2px));
 	} 
 	nav{
-		height:calc(50px*572/1050);
+		height:calc(50px*var(--smallest-width)/1050);
 	}
 	header, #round{
-		font-size:calc(50px*572/1050);
+		font-size:calc(50px*var(--smallest-width)/1050);
 	}
 }
 
 
 @media (min-width: 992px)  { 
 	main{
-		width:var(--small-width);
+		width:calc(var(--small-width)*1px);
 	}
 	.card{
-		width:calc(var(--small-width)/9 - 2px);
-		height:calc(147/108*(var(--small-width)/9 - 2px));
+		width:calc(var(--small-width)/9*1px - 2px);
+		height:calc(147/108*(var(--small-width)/9*1px - 2px));
 	}
 	.rows>div, .stacks>div, .results>div{
-		height:calc(147/108*(var(--small-width)/9 - 2px));
+		height:calc(147/108*(var(--small-width)/9*1px - 2px));
 	} 
 	.stacks{
-		height:calc(2*147/108*(var(--small-width)/9 - 2px));
+		height:calc(2*147/108*(var(--small-width)/9*1px - 2px));
 	} 
 	nav{
-		height:calc(50px*768/1050);
+		height:calc(50px*var(--small-width)/1050);
 	}
 	header, #round{
-		font-size:calc(50px*768/1050);
+		font-size:calc(50px*var(--small-width)/1050);
 	}
 }
 @media (min-width:1200px)  { 
 	main{
-		width:var(--great-width);
+		width:calc(var(--great-width)*1px);
 	}
 	.card{
-		width:calc(var(--great-width)/9 - 2px);
-		height:calc(147/108*(var(--great-width)/9 - 2px));
+		width:calc(var(--great-width)/9*1px - 2px);
+		height:calc(147/108*(var(--great-width)/9*1px - 2px));
 	}
 	.rows>div, .stacks>div, .results>div{
-		height:calc(147/108*(var(--great-width)/9 - 2px));
+		height:calc(147/108*(var(--great-width)/9*1px - 2px));
 	} 
 	.stacks{
-		height:calc(2*147/108*(var(--great-width)/9 - 2px));
+		height:calc(2*147/108*(var(--great-width)/9*1px - 2px));
 	} 
 	nav{
-		height:calc(50px*992/1050);
+		height:calc(50px*var(--great-width)/1050);
 	}
 	header, #round{
-		font-size:calc(50px*992/1050);
+		font-size:calc(50px*var(--great-width)/1050);
 	}
 }
-@media (min-width: 1700px){ 
+@media (min-width: 1600px){ 
 	main{
-		width:var(--greatest-width);
+		width:calc(var(--greatest-width)*1px);
 	}
 	.card{
-		width:calc(var(--greatest-width)/9 - 2px);
-		height:calc(147/108*(var(--greatest-width)/9 - 2px));
+		width:calc(var(--greatest-width)/9*1px - 2px);
+		height:calc(147/108*(var(--greatest-width)/9*1-px- 2px));
 	}
 	.rows>div, .stacks>div, .results>div{
-		height:calc(147/108*(var(--greatest-width)/9 - 2px));
+		height:calc(147/108*(var(--greatest-width)/9*1px - 2px));
 	} 
 	.stacks{
-		height:calc(2*147/108*(var(--greatest-width)/9 - 2px));
+		height:calc(2*147/108*(var(--greatest-width)/9*1px - 2px));
 	} 
 	nav{
-		height:calc(50px*1300/1050);
+		height:calc(50px*var(--greatest-width)/1050);
 	}
 	header, #round{
-		font-size:calc(50px*1300/1050);
+		font-size:calc(50px*var(--greatest-width)/1050);
 	}
 
 }
