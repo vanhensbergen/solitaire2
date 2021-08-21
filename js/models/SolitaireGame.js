@@ -1,5 +1,6 @@
 import Deck from './Deck.js'
 import ModelChangeEvent from'../events/ModelChangeEvent.js'
+import ModelWinEvent from '../events/ModelWinEvent.js';
 import GameRoundHistory from './GameRoundHistory.js'
 export default class SolitaireGame extends EventTarget{
 	#deck;
@@ -33,10 +34,28 @@ export default class SolitaireGame extends EventTarget{
 				let pileId = event.pileId;
 				let cardId = event.cardId;
 				this.#placeCardsOnPile(pileId,cardId);
+				this.#hasWon()
 			break;
 		}
 	}
-	
+	#hasWon(){
+		let hasWon = this.#cardPiles[0].length===0&&this.#cardPiles[1].length ===0;
+		if(!hasWon){
+			console.log('niet gewonnen')
+			return;
+		}
+		for(let i = 2; i <9; i++){
+			for(const card of this.#cardPiles[i]){
+				if(!card.visible){
+					console.log('niet gewonnen')
+					return ;
+				}
+			}
+		}
+		console.log('wel gewonnen')
+		this.#fireGameWon();
+	}
+
 	#start(){
 		this.#round = 1;
 		this.#gameRoundHistory.clear();
@@ -67,6 +86,14 @@ export default class SolitaireGame extends EventTarget{
 	
 	#fireModelChanged(changedPiles){
 		this.dispatchEvent(new ModelChangeEvent(changedPiles,this.#round))
+	}
+
+	#fireGameWon(){
+		const piles = [];
+		for (let i =2;i<this.#cardPiles; i++){
+			piles.push(this.#cardPiles[i])
+		}
+		this.dispatchEvent(new ModelWinEvent(this.#cardPiles));
 	}
 	/**
 	*	breng een stel nieuwe kaaren open op de stapel om te gebruiken

@@ -7,7 +7,6 @@ export default class ModelChangeEvent extends Event{
 		super(ModelChangeEvent.#TYPE)
 		this.#piles = piles;
 		this.#round = round;
-		
 	}
 	
 	get piles(){

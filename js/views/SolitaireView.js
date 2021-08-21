@@ -6,6 +6,7 @@ import ViewNewGameEvent from '../events/ViewNewGameEvent.js'
 import ViewNewCardEvent from '../events/ViewNewCardEvent.js'
 import ViewUndoMoveEvent from '../events/ViewUndoMoveEvent.js'
 import ViewCardsDroppedEvent from '../events/ViewCardsDroppedEvent.js'
+import RoleUpHandler from './RollUpHandler.js'
 export default class SolitaireView extends EventTarget{
     #piles
 	#ghostDiv
@@ -77,8 +78,8 @@ export default class SolitaireView extends EventTarget{
 		}
 		this.#ghostDiv.replaceChildren(...html);
 		document.querySelector('.playfield').appendChild(this.#ghostDiv);
-		this.#ghostDiv.style.left = event.pageX - 50;
-		this.#ghostDiv.style.top = event.pageY +4;
+		this.#ghostDiv.style.left = (event.pageX - 50)+"px";
+		this.#ghostDiv.style.top = (event.pageY +4)+"px";
 		const handler  = (e)=>this.#onDrag(e)
 		document.addEventListener('touchmove',handler,{passive:false})
 		document.addEventListener('mousemove',handler)
@@ -132,9 +133,8 @@ export default class SolitaireView extends EventTarget{
 						pageY = event.pageY;
 						break;
 				}
-
-				this.#ghostDiv.style.left = pageX-50;
-				this.#ghostDiv.style.top = pageY+4
+				this.#ghostDiv.style.left = (pageX-50)+"px";
+				this.#ghostDiv.style.top = (pageY+4)+"px"
 			}
 
 	}
@@ -162,6 +162,9 @@ export default class SolitaireView extends EventTarget{
 	handleEvent(event){
 		switch(event.type)
 		{
+			case 'modelwin':
+				new RoleUpHandler(event.piles);
+			break; 
 			case 'modelchange':
 				this.#show(event.piles);
 				this.#showRound(event.round);
@@ -174,6 +177,7 @@ export default class SolitaireView extends EventTarget{
 				let cardId = event.cardId;
 				this.dispatchEvent(new ViewCardsDroppedEvent(pileId, cardId));
 			break;
+			
 			
 		}
 		

@@ -8,4 +8,5 @@ window.addEventListener('load',()=>{
 		view.addEventListener('viewnewcard',model)
 		view.addEventListener('viewcardsdropped',model)
 		view.addEventListener('viewundomove',model)
+		model.addEventListener('modelwin',view)
 })
