@@ -9,4 +9,5 @@ window.addEventListener('load',()=>{
 		view.addEventListener('viewcardsdropped',model)
 		view.addEventListener('viewundomove',model)
 		model.addEventListener('modelwin',view)
+		model.addEventListener('modelrollup',view)
 })

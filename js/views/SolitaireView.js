@@ -163,7 +163,8 @@ export default class SolitaireView extends EventTarget{
 		switch(event.type)
 		{
 			case 'modelwin':
-				new RoleUpHandler(event.piles);
+				//todo
+				console.log('have to find a nice expression for winning a game')
 			break; 
 			case 'modelchange':
 				this.#show(event.piles);
@@ -176,6 +177,9 @@ export default class SolitaireView extends EventTarget{
 				let pileId = event.pileId;
 				let cardId = event.cardId;
 				this.dispatchEvent(new ViewCardsDroppedEvent(pileId, cardId));
+			break;
+			case 'modelrollup':
+				new RoleUpHandler(event.piles);
 			break;
 			
 			

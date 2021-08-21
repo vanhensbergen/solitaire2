@@ -2,16 +2,19 @@ import Deck from './Deck.js'
 import ModelChangeEvent from'../events/ModelChangeEvent.js'
 import ModelWinEvent from '../events/ModelWinEvent.js';
 import GameRoundHistory from './GameRoundHistory.js'
+import ModelRollUpEvent from '../events/ModelRollUpEvent.js';
 export default class SolitaireGame extends EventTarget{
 	#deck;
 	#cardPiles
 	#gameRoundHistory
 	#round;
+	#succesEnding;
 	constructor(){
 		super()
 		this.#deck = new Deck();
 		this.#cardPiles = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
 		this.#gameRoundHistory = new GameRoundHistory();
+		this.#succesEnding = false;
 	}
 	
 	handleEvent(event){
@@ -34,30 +37,52 @@ export default class SolitaireGame extends EventTarget{
 				let pileId = event.pileId;
 				let cardId = event.cardId;
 				this.#placeCardsOnPile(pileId,cardId);
-				this.#hasWon()
+				this.#testHasWon()
+				this.#testRollUpConditionMet()
 			break;
 		}
 	}
-	#hasWon(){
-		let hasWon = this.#cardPiles[0].length===0&&this.#cardPiles[1].length ===0;
-		if(!hasWon){
-			console.log('niet gewonnen')
-			return;
-		}
-		for(let i = 2; i <9; i++){
-			for(const card of this.#cardPiles[i]){
-				if(!card.visible){
-					console.log('niet gewonnen')
-					return ;
+	#testHasWon(){
+		if(!this.#succesEnding){
+			let hasWon = this.#cardPiles[0].length===0&&this.#cardPiles[1].length ===0;
+			if(!hasWon){
+				return;
+			}
+			for(let i = 2; i <9; i++){
+				for(const card of this.#cardPiles[i]){
+					if(!card.visible){
+						return ;
+					}
 				}
 			}
+			this.#succesEnding = true;
+			this.#fireGameWon();
 		}
-		console.log('wel gewonnen')
-		this.#fireGameWon();
 	}
+	/**
+	 * deze methode test of de conditie om het beeindigde gewonnen spel 
+	 * middels animatie te laten oprollen naar de eindstapels gerealiseerd is.
+	 * Deze conditie is dat de speelkaarten op de speeltafel op de eerste 4 rijen 
+	 * liggen klaar om verplaatst te worden naar de eindstapels. Dan moet het event gegenereerd worden.
+	 */
+	#testRollUpConditionMet(){
+		if(this.#succesEnding){
+			let condition = false
+			for(let i=2; i<6; i++){
+				condition = condition||this.#cardPiles[i].length>0;
+			}
+			for(let i = 6; i<9; i++){
+				condition = condition&&this.#cardPiles[i].length===0;
+			}
+			if(condition){
+				this.#fireRollUpConditionMet(this.#cardPiles);
+			}
+		}
 
+	}
 	#start(){
 		this.#round = 1;
+		this.#succesEnding = false;
 		this.#gameRoundHistory.clear();
 		this.#deck.shuffle();
 		this.#cardPiles = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
@@ -89,11 +114,10 @@ export default class SolitaireGame extends EventTarget{
 	}
 
 	#fireGameWon(){
-		const piles = [];
-		for (let i =2;i<this.#cardPiles; i++){
-			piles.push(this.#cardPiles[i])
-		}
-		this.dispatchEvent(new ModelWinEvent(this.#cardPiles));
+		this.dispatchEvent(new ModelWinEvent());
+	}
+	#fireRollUpConditionMet(piles){
+		this.dispatchEvent(new ModelRollUpEvent(piles))
 	}
 	/**
 	*	breng een stel nieuwe kaaren open op de stapel om te gebruiken
