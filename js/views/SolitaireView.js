@@ -6,7 +6,7 @@ import ViewNewGameEvent from '../events/ViewNewGameEvent.js'
 import ViewNewCardEvent from '../events/ViewNewCardEvent.js'
 import ViewUndoMoveEvent from '../events/ViewUndoMoveEvent.js'
 import ViewCardsDroppedEvent from '../events/ViewCardsDroppedEvent.js'
-import RoleUpHandler from './RollUpHandler.js'
+import RollUpHandler from './RollUpHandler.js'
 export default class SolitaireView extends EventTarget{
     #piles
 	#ghostDiv
@@ -87,7 +87,8 @@ export default class SolitaireView extends EventTarget{
 				(e)=>{
 					if(this.#ghostDiv!==null){
 						document.removeEventListener('touchmove',handler)
-						this.#ghostDiv.remove();
+						let el = document.querySelector('#ghostdiv')
+						el.remove();
 						this.#ghostDiv = null;
 						this.#showHiddenCards();
 						document.body.style.cursor = 'default'
@@ -101,8 +102,8 @@ export default class SolitaireView extends EventTarget{
 					if(this.#ghostDiv!==null){
 						
 						document.removeEventListener('mousemove',handler)
-						this.#ghostDiv.remove();
-						this.#ghostDiv = null;
+						this.#ghostDiv.remove();//haal uit de tree
+						this.#ghostDiv = null;//
 						this.#showHiddenCards();
 						document.body.style.cursor = 'default'
 						
@@ -179,7 +180,7 @@ export default class SolitaireView extends EventTarget{
 				this.dispatchEvent(new ViewCardsDroppedEvent(pileId, cardId));
 			break;
 			case 'modelrollup':
-				new RoleUpHandler(event.piles);
+				new RollUpHandler(event.piles);
 			break;
 			
 			

@@ -75,7 +75,7 @@ export default class SolitaireGame extends EventTarget{
 				condition = condition&&this.#cardPiles[i].length===0;
 			}
 			if(condition){
-				this.#fireRollUpConditionMet(this.#cardPiles);
+				this.#fireRollUpConditionMet();
 			}
 		}
 
@@ -116,12 +116,28 @@ export default class SolitaireGame extends EventTarget{
 	#fireGameWon(){
 		this.dispatchEvent(new ModelWinEvent());
 	}
-	#fireRollUpConditionMet(piles){
+	/**
+	 * geef het event de ids van de kaarten in de eerste 4 rijen mee. Hij heeft dan
+	 * alle info die nodig is. 
+	 * Het object dat deze info krijgt kan dan bepalen waar de kaarten naartoe moeten.
+	 * Bijvoorbeeld, als id = 30 dan moet de kaart naar de derde eindstapel toe. 
+	 * eerste eindstapel loopt van id = 0 t/m id = 13
+	 * tweede eindstapel loopt van id = 14 t/m 27
+	 * derde eindstape toe die de kaarten van id = 28  t/m 41
+	 * vierde eindstape loopt van id = 42 t/m 55 
+	 */
+	#fireRollUpConditionMet(){
+		const piles = [[],[],[],[]];
+		for (let i =2; i<6; i++){
+			for (let card of this.#cardPiles[i]){
+				piles[i-2].push(card.id);
+			}
+		}
 		this.dispatchEvent(new ModelRollUpEvent(piles))
 	}
 	/**
 	*	breng een stel nieuwe kaaren open op de stapel om te gebruiken
-	als returnaarde false dan zijn er geen nieuwe kaarten; de stapel was leeg.
+	als returnwaarde false dan zijn er geen nieuwe kaarten; de stapel was leeg.
 	*/
 	#openNewCard(){
 		let stackPile = this.#cardPiles[0]
