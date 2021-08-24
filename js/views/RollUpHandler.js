@@ -32,6 +32,7 @@ export default class RollUpHandler{
         this.#stats = this.getDestinationStats();
         console.log(this.#stats)
         console.log(this.#ids)
+        this.next()
     }
 
     getDestinationStats(){
@@ -41,14 +42,36 @@ export default class RollUpHandler{
         for (const dest of this.#destinationPiles){
             counts[teller].nextid = dest.children.length + teller*13;
             let el =dest.getBoundingClientRect();
-            counts[teller].left = el.left-playField.left;
+            counts[teller].left = el.left - playField.left;
             counts[teller].top = el.top - playField.top;
             teller++;
         }
         return counts
     }
 
-    
+    next(){
+        
+        let destinationId = 0;
+        for (const stat of this.#stats)
+        {
+            let nextId = stat.nextid;
+            let sourceId = 0;
+            for(const idSet of this.#ids)
+            {
+                let ID =  idSet[idSet.length-1]
+                if(nextId ===ID){
+                    
+                    console.log(`te verplaatsen van source ${sourceId} naar destination ${destinationId}`)
+                    let toBeMoved = this.#sourcePiles[sourceId].lastChild;
+                    this.#destinationPiles[destinationId].append(toBeMoved);
+                    return;
+
+                }
+                sourceId++;
+            }
+            destinationId++;
+        }
+    }
 
 
 }
