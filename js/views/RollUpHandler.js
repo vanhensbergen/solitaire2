@@ -9,10 +9,46 @@ export default class RollUpHandler{
      * De taak van dit object is de kaarten geanimerd naar hu eindstapel te brengen en daarmee de 
      * kaartstapels in de view af te bouwen tot ze leeg zijn
      */
-    #piles;
+    #ids;
+    #sourcePiles
+    #destinationPiles;
+    #stats;
     constructor(piles){
-        this.#piles = piles;
-        window.alert("ik ga het spel oprollen volautomatisch straks met "+this.#piles.length)
-        console.log(this.#piles)
+        this.#ids = piles;
+        this.#init();
     }
+
+    #init(){
+        this.#sourcePiles =[];
+        this.#destinationPiles = [];
+        const containers = document.querySelectorAll('.playfield>div>div');
+        for(let i = 2;i<6;i++){
+            this.#sourcePiles.push(containers[i]);
+        }
+        for(let i = 9; i<13; i++){
+            this.#destinationPiles.push(containers[i])
+        }
+        console.log(`sources ${this.#sourcePiles.length} destinations ${this.#destinationPiles.length}`)
+        this.#stats = this.getDestinationStats();
+        console.log(this.#stats)
+        console.log(this.#ids)
     }
+
+    getDestinationStats(){
+        let counts =[{},{},{},{}];
+        let teller = 0;
+        const playField = (document.querySelector('.playfield')).getBoundingClientRect();
+        for (const dest of this.#destinationPiles){
+            counts[teller].nextid = dest.children.length + teller*13;
+            let el =dest.getBoundingClientRect();
+            counts[teller].left = el.left-playField.left;
+            counts[teller].top = el.top - playField.top;
+            teller++;
+        }
+        return counts
+    }
+
+    
+
+
+}
