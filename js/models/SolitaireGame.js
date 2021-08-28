@@ -127,13 +127,18 @@ export default class SolitaireGame extends EventTarget{
 	 * vierde eindstape loopt van id = 42 t/m 55 
 	 */
 	#fireRollUpConditionMet(){
-		const piles = [[],[],[],[]];
+		const sources = [[],[],[],[]];
 		for (let i =2; i<6; i++){
 			for (let card of this.#cardPiles[i]){
-				piles[i-2].push(card.id);
+				sources[i-2].push(card.id);
 			}
 		}
-		this.dispatchEvent(new ModelRollUpEvent(piles))
+		const destinations = [];
+		for (let i = 9 ;i <13; i++){
+			let endPile = this.#cardPiles[i];
+			destinations.push(endPile[endPile.length-1].id);
+		}
+		this.dispatchEvent(new ModelRollUpEvent(sources, destinations))
 	}
 	/**
 	*	breng een stel nieuwe kaaren open op de stapel om te gebruiken

@@ -1,3 +1,5 @@
+import AnimatedHTML from "./AnimatedHTML.js";
+import AnimationClock from "./AnimationClock.js";
 export default class RollUpHandler{
     /**
      * #piles bavat 4 arrays.Elke array bevat de id's van de kaarten in de betreffende
@@ -9,12 +11,13 @@ export default class RollUpHandler{
      * De taak van dit object is de kaarten geanimerd naar hu eindstapel te brengen en daarmee de 
      * kaartstapels in de view af te bouwen tot ze leeg zijn
      */
-    #ids;
+    #sourceIds;
+    #destinationIds;
     #sourcePiles
     #destinationPiles;
-    #stats;
-    constructor(piles){
-        this.#ids = piles;
+    constructor(sources, destinations){
+        this.#sourceIds = sources;
+        this.#destinationIds = destinations;
         this.#init();
     }
 
@@ -28,49 +31,37 @@ export default class RollUpHandler{
         for(let i = 9; i<13; i++){
             this.#destinationPiles.push(containers[i])
         }
-        console.log(`sources ${this.#sourcePiles.length} destinations ${this.#destinationPiles.length}`)
-        this.#stats = this.getDestinationStats();
-        console.log(this.#stats)
-        console.log(this.#ids)
-        this.next()
+        
+        //console.log(this.#sourceIds)
+       // console.log(this.#destinationIds)
+        let animationHTML= this.next()
+        this.move(animationHTML);
     }
 
-    getDestinationStats(){
-        let counts =[{},{},{},{}];
-        let teller = 0;
-        const playField = (document.querySelector('.playfield')).getBoundingClientRect();
-        for (const dest of this.#destinationPiles){
-            counts[teller].nextid = dest.children.length + teller*13;
-            let el =dest.getBoundingClientRect();
-            counts[teller].left = el.left - playField.left;
-            counts[teller].top = el.top - playField.top;
-            teller++;
-        }
-        return counts
-    }
 
     next(){
-        
-        let destinationId = 0;
-        for (const stat of this.#stats)
-        {
-            let nextId = stat.nextid;
-            let sourceId = 0;
-            for(const idSet of this.#ids)
-            {
-                let ID =  idSet[idSet.length-1]
-                if(nextId ===ID){
-                    
-                    console.log(`te verplaatsen van source ${sourceId} naar destination ${destinationId}`)
-                    let toBeMoved = this.#sourcePiles[sourceId].lastChild;
-                    this.#destinationPiles[destinationId].append(toBeMoved);
-                    return;
-
+        for(let d =0; d<this.#destinationIds.length; d++){
+            let nextId = this.#destinationIds[d]+1;
+            for(let s = 0; s <this.#sourceIds.length; s++){
+                let sourcePile  = this.#sourceIds[s]
+                let lastId  = sourcePile[sourcePile.length -1];
+                if(nextId === lastId){
+                    let toBeMoved = this.#sourcePiles[s].lastChild;
+                    let sourceBounds = toBeMoved.getBoundingClientRect()
+                    let destinationBounds =  this.#destinationPiles[d].getBoundingClientRect();
+                    toBeMoved.style.left= (sourceBounds.left - destinationBounds.left)+"px"
+                    toBeMoved.style.top= (sourceBounds.top - destinationBounds.top)+"px"
+                    this.#destinationPiles[d].append(toBeMoved);
+                    return new AnimatedHTML(toBeMoved,10000);
                 }
-                sourceId++;
             }
-            destinationId++;
         }
+    }
+
+    move(html){
+        let clock = new AnimationClock();
+        clock.addUpdatable(html);
+        clock.start();
     }
 
 

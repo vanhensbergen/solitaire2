@@ -1,14 +1,19 @@
 export default class ModelRollUpEvent extends Event{
 	static #TYPE = 'modelrollup';
-	#piles;
+	#sources;
+	#destinations;
 	
 	
-	constructor(piles){
+	constructor(sources, destinations){
 		super(ModelRollUpEvent.#TYPE)
-		this.#piles = piles;
+		this.#sources = sources;
+		this.#destinations = destinations
 	}
 	
-	get piles(){
-		return this.#piles;
+	get sources(){
+		return this.#sources;
+	}
+	get destinations(){
+		return this.#destinations;
 	}
 }

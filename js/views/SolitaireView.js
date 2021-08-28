@@ -180,7 +180,7 @@ export default class SolitaireView extends EventTarget{
 				this.dispatchEvent(new ViewCardsDroppedEvent(pileId, cardId));
 			break;
 			case 'modelrollup':
-				new RollUpHandler(event.piles);
+				new RollUpHandler(event.sources, event.destinations);
 			break;
 			
 			
