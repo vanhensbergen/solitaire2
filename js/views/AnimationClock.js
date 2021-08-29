@@ -6,20 +6,27 @@ export default class AnimationClock{
         this.#updatables = [];
     }
     start(){
-        window.requestAnimationFrame(()=>this.tick(t))
+        window.requestAnimationFrame(t=>{this.tick(t)})
     }
 
 
     tick(timestamp){
-        console.log(timestamp)
+        let stop = true;
         for (const updatable of this.#updatables){
             updatable.tick(timestamp);
+            stop = stop&&updatable.arrived;
+
         }
-        window.requestAnimationFrame((t)=>this.tick(t))
+        if(!stop){
+            window.requestAnimationFrame(t=>{this.tick(t)})
+        }
+        else{
+            console.log('klok gestopt');
+        }
+        
     }
 
     addUpdatable(html){
         this.#updatables.push(html);
-        console.log(html)
     }
 }

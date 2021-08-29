@@ -2,11 +2,13 @@ export default class AnimatedHTML{
     #html;
     #delay// in millisecs
     #startTime
+    #arrived;
     
     constructor(html,delay){
         this.#html = html;
         this.#delay = delay;
         this.#startTime = null;
+        this.#arrived = false;
     }
 
     
@@ -24,12 +26,20 @@ export default class AnimatedHTML{
     }
 
     tick(timestamp){
-        if(this.#startTime===null){
-            this.#startTime = timeStamp+this.#delay;
+        if(!this.arrived){
+            if(this.#startTime===null){
+                this.#startTime = timestamp+this.#delay;
+            }
+            if(timestamp>this.#startTime){
+                this.left -= Math.sign(this.left);
+                this.top -= Math.sign(this.top)
+            }
+            this.#arrived = Math.abs(this.left)<=1&&Math.abs(this.top)<=1;
         }
-        if(timestamp>this.#startTime){
-            this.left -= Math.sign(this.left)*10;
-            this.top -= Math.sign(this.top)*10
-        }
+        
+    }
+
+    get arrived(){
+        return this.#arrived;
     }
 }
