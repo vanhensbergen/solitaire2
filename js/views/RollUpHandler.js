@@ -45,7 +45,7 @@ export default class RollUpHandler{
         let animationHTML= this.#next(delay) 
         do{
             this.#animationClock.addUpdatable(animationHTML);
-            delay +=1000;
+            delay +=2000;
             animationHTML= this.#next(delay)
 
         }while(animationHTML!==null)

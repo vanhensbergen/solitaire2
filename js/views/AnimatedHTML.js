@@ -33,8 +33,9 @@ export default class AnimatedHTML{
             if(timestamp>this.#startTime){
                 this.left -= Math.sign(this.left);
                 this.top -= Math.sign(this.top)
+                this.#arrived = Math.abs(this.left)<=1&&Math.abs(this.top)<=1;
             }
-            this.#arrived = Math.abs(this.left)<=1&&Math.abs(this.top)<=1;
+           
         }
         
     }
