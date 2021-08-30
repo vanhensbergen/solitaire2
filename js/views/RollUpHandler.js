@@ -41,20 +41,16 @@ export default class RollUpHandler{
             this.#destinationPiles.push(containers[i])
         }
         this.#animationClock = new AnimationClock();
-        let delay = 1000;
-        let animationHTML= this.#next(delay) 
-        do{
-            this.#animationClock.addUpdatable(animationHTML);
-            delay +=2000;
-            animationHTML= this.#next(delay)
-
-        }while(animationHTML!==null)
-
-        this.startAnimation();
+        this.#animationClock.retrieveUpdatable = ()=>{return this.nextAnimated()}
+        this.#animationClock.start();
     }
 
-
-    #next(delay){
+    /**
+     * de methode bepaalt welk volgend html element/card moet worden geanimeerd zoda hij
+     * kan bewegen naar zijn eindstapel;
+     * @returns een nieuw AnimatedHTMLobject of null als er geen enkele meer is.
+     */
+    nextAnimated(){
         for(let d =0; d<this.#destinationIds.length; d++){
             let nextId = this.#destinationIds[d]+1;
             for(let s = 0; s <this.#sourceIds.length; s++){
@@ -69,7 +65,7 @@ export default class RollUpHandler{
                     toBeMoved.style.top= (sourceBounds.top - destinationBounds.top)+"px"
                     this.#destinationPiles[d].append(toBeMoved);//verwijderen uit de sourcePiles is automatisch na append elders
                     this.#destinationIds[d]= sourcePile.pop()//verwijder dit element van de sourceIds en plaats in destinationIds
-                    return new AnimatedHTML(toBeMoved,delay);
+                    return new AnimatedHTML(toBeMoved);
                 }
             }
         }

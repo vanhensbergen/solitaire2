@@ -1,14 +1,19 @@
 export default class AnimatedHTML{
     #html;
-    #delay// in millisecs
-    #startTime
     #arrived;
+    #startTime;
+    #startLeft;
+    #startTop;
+    static #TRAVEL_TIME = 10
+
     
-    constructor(html,delay){
+    constructor(html){
         this.#html = html;
-        this.#delay = delay;
-        this.#startTime = null;
         this.#arrived = false;
+        
+        this.#startLeft = this.left;
+        this.#startTop = this.top;
+        this.#startTime = null;
     }
 
     
@@ -27,17 +32,18 @@ export default class AnimatedHTML{
 
     tick(timestamp){
         if(!this.arrived){
-            if(this.#startTime===null){
-                this.#startTime = timestamp+this.#delay;
+            if(this.#startTime === null){
+                this.#startTime = timestamp
             }
-            if(timestamp>this.#startTime){
-                this.left -= Math.sign(this.left);
-                this.top -= Math.sign(this.top)
-                this.#arrived = Math.abs(this.left)<=1&&Math.abs(this.top)<=1;
+            let activeTime = (timestamp - this.#startTime)/1000;
+            this.top = this.#startTop*(1-activeTime/AnimatedHTML.#TRAVEL_TIME)
+            this.left = this.#startLeft*(1-activeTime/AnimatedHTML.#TRAVEL_TIME)
+            this.#arrived = activeTime>AnimatedHTML.#TRAVEL_TIME
+            if(this.arrrived){//voor de correcte landing activeTime may overshoot.
+                this.left =0;
+                this.top =0;
             }
-           
         }
-        
     }
 
     get arrived(){
