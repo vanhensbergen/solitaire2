@@ -40,9 +40,12 @@ export default class AnimationClock{
             window.requestAnimationFrame(t=>{this.tick(t)})
         }
         else{
-            console.log('klok gestopt');
+            this.stopped()
         }
         
+    }
+    stopped(){
+        throw new Error('to be implemented couple callback')
     }
     /**
      * abstracte methode wordt geset na instantiatie. middels een aangeboden methode,

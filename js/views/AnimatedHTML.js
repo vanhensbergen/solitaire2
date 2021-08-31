@@ -4,7 +4,7 @@ export default class AnimatedHTML{
     #startTime;
     #startLeft;
     #startTop;
-    static #TRAVEL_TIME = 10
+    static #TRAVEL_TIME = 6
 
     
     constructor(html){

@@ -40,16 +40,29 @@ export default class RollUpHandler{
         for(let i = 9; i<13; i++){
             this.#destinationPiles.push(containers[i])
         }
+        this.#setScreen();
         this.#animationClock = new AnimationClock();
         this.#animationClock.retrieveUpdatable = ()=>{return this.nextAnimated()}
+        this.#animationClock.stopped = ()=>{this.hideScreen()}
         this.#animationClock.start();
     }
 
+    #setScreen(){
+        let screen = document.querySelector("#screen");
+        screen.classList.remove('screen_hide');
+        screen.classList.add('screen_visible')
+    }
+    hideScreen(){
+        let screen = document.querySelector("#screen");
+        screen.classList.add('screen_hide');
+        screen.classList.remove('screen_visible')
+    }
     /**
      * de methode bepaalt welk volgend html element/card moet worden geanimeerd zoda hij
      * kan bewegen naar zijn eindstapel;
      * @returns een nieuw AnimatedHTMLobject of null als er geen enkele meer is.
      */
+
     nextAnimated(){
         for(let d =0; d<this.#destinationIds.length; d++){
             let nextId = this.#destinationIds[d]+1;
