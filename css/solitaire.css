@@ -235,11 +235,13 @@ nav>img:hover{
 	height:100%;
 	background-color: white;
 	opacity: 0.2;
+	top:0px;
+	left:0px;
 }
 .screen_hide{
 	display:none;
 }
-screen_visible{
+.screen_visible{
 	display:block;
 }
 

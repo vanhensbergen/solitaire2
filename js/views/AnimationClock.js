@@ -7,7 +7,7 @@ export default class AnimationClock{
 
     constructor(){
         this.#updatables = [];
-        this.#delay = 2000;
+        this.#delay = 1400;
         this.#nextUpdateTime = -1;
     }
     start(){
