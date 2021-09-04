@@ -238,6 +238,14 @@ nav>img:hover{
 	top:0px;
 	left:0px;
 }
+#screen>div{
+	position:absolute;
+	left:50%;
+	top:50%;
+	font-size:200px;
+	color:green;
+	transform: translate(-50%, -50%);
+}
 .screen_hide{
 	display:none;
 }
