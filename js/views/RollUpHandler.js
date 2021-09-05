@@ -55,7 +55,11 @@ export default class RollUpHandler{
     hideScreen(){
         let screen = document.querySelector("#screen");
         screen.classList.add('screen_hide');
-        screen.classList.remove('screen_visible')
+        screen.classList.remove('screen_visible');
+        this.handleRollupEnded();
+    }
+    handleRollupEnded(){
+        throw new Error('implement this method Please!!')
     }
     /**
      * de methode bepaalt welk volgend html element/card moet worden geanimeerd zoda hij

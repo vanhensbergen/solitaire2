@@ -38,8 +38,8 @@ export default class AnimatedHTML{
             let activeTime = (timestamp - this.#startTime)/1000;
             this.top = this.#startTop*(1-activeTime/AnimatedHTML.#TRAVEL_TIME)
             this.left = this.#startLeft*(1-activeTime/AnimatedHTML.#TRAVEL_TIME)
-            this.#arrived = activeTime>AnimatedHTML.#TRAVEL_TIME
-            if(this.arrrived){//voor de correcte landing activeTime may overshoot.
+            this.#arrived = activeTime>=AnimatedHTML.#TRAVEL_TIME
+            if(this.#arrived){//voor de correcte landing activeTime may overshoot.
                 this.left =0;
                 this.top =0;
             }

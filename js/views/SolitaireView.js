@@ -40,7 +40,7 @@ export default class SolitaireView extends EventTarget{
 		let button = document.querySelectorAll('nav>img')[0];
 		button.addEventListener('click',()=>{
 			this.dispatchEvent(new ViewNewGameEvent())
-			
+			this.#comment = "Good luck with this game."
 		});
 		
 	}
@@ -60,7 +60,10 @@ export default class SolitaireView extends EventTarget{
 	}
 	
 	
-
+	set #comment(value){
+		let commentField = document.querySelector("header");
+		commentField.innerText  = value;
+	}
 	#startDrag(event){
 		let draggables = event.draggables;
 		let el = document.querySelector('#ghostdiv')
@@ -170,7 +173,7 @@ export default class SolitaireView extends EventTarget{
 		switch(event.type)
 		{
 			case 'modelwin':
-				//todo
+				this.#comment = "You have won!! Play on for bonus.";
 				console.log('have to find a nice expression for winning a game')
 			break; 
 			case 'modelchange':
@@ -186,7 +189,10 @@ export default class SolitaireView extends EventTarget{
 				this.dispatchEvent(new ViewCardsDroppedEvent(pileId, cardId));
 			break;
 			case 'modelrollup':
-				new RollUpHandler(event.sources, event.destinations);
+				this.#comment = "Enjoy the bonus.";
+				let roller = new RollUpHandler(event.sources, event.destinations);
+				roller.handleRollupEnded = ()=>{this.#comment = "Another game??"}
+
 			break;
 			
 			
