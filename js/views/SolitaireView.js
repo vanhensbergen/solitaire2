@@ -63,6 +63,8 @@ export default class SolitaireView extends EventTarget{
 
 	#startDrag(event){
 		let draggables = event.draggables;
+		let el = document.querySelector('#ghostdiv')
+		if(el!==null)el.remove();
 		this.#ghostDiv = document.createElement('div')
 		this.#ghostDiv.id = 'ghostdiv'
 		this.#ghostDiv.classList.add('card');
@@ -86,13 +88,15 @@ export default class SolitaireView extends EventTarget{
 		document.addEventListener('touchend',
 				(e)=>{
 					if(this.#ghostDiv!==null){
-						document.removeEventListener('touchmove',handler)
+						
 						let el = document.querySelector('#ghostdiv')
 						el.remove();
 						this.#ghostDiv = null;
 						this.#showHiddenCards();
+						
 						document.body.style.cursor = 'default'
 						e.preventDefault()
+						document.removeEventListener('touchmove',handler)
 						
 					}
 				}
@@ -101,12 +105,14 @@ export default class SolitaireView extends EventTarget{
 				(e)=>{
 					if(this.#ghostDiv!==null){
 						
-						document.removeEventListener('mousemove',handler)
-						this.#ghostDiv.remove();//haal uit de tree
+						
+						let el = document.querySelector('#ghostdiv')
+						el.remove();
+						//this.#ghostDiv.remove();//haal uit de tree
 						this.#ghostDiv = null;//
 						this.#showHiddenCards();
 						document.body.style.cursor = 'default'
-						
+						document.removeEventListener('mousemove',handler)
 					}
 				}
 			)
