@@ -24,10 +24,12 @@ export default class SolitaireGame extends EventTarget{
 				this.#start()
 			break;
 			case 'viewnewcard':
-				if(this.#hasRoundEnded()){
-					this.#nextRound();
-				}else{
-					this.#openNewCard();
+				if(!this.#succesEnding){
+					if(this.#hasRoundEnded()){
+						this.#nextRound();
+					}else{
+						this.#openNewCard();
+					}
 				}
 			break;
 			case 'viewundomove':
@@ -71,6 +73,7 @@ export default class SolitaireGame extends EventTarget{
 			for(let i=2; i<6; i++){
 				condition = condition||this.#cardPiles[i].length>0;
 			}
+			if(!condition)return// er ligt niets op de eerste 4 stapels om op te rollen, dus stop er maar mee
 			for(let i = 6; i<9; i++){
 				condition = condition&&this.#cardPiles[i].length===0;
 			}
@@ -138,6 +141,7 @@ export default class SolitaireGame extends EventTarget{
 			let endPile = this.#cardPiles[i];
 			destinations.push(endPile[endPile.length-1].id);
 		}
+		
 		this.dispatchEvent(new ModelRollUpEvent(sources, destinations))
 	}
 	/**
@@ -285,7 +289,7 @@ export default class SolitaireGame extends EventTarget{
 	}
 	
 	#hasRoundEnded(){
-		return this.#cardPiles[0].length ===0;
+		return this.#cardPiles[0].length ===0&&this.#cardPiles[1].length!==0;
 	}
 	
 	#nextRound(){
@@ -317,22 +321,25 @@ export default class SolitaireGame extends EventTarget{
 	}
 	
 	#undoMove(){
-		let lastMove = this.#gameRoundHistory.previous();
-		if(lastMove!==null){
-			let source = lastMove.source;
-			let sourcePile = source.pile;
-			let sourceId = source.id;
-			this.#cardPiles[sourceId] = sourcePile;
-			let destination = lastMove.destination;
-			let destinationPile = destination.pile
-			let destinationId = destination.id;
-			this.#cardPiles[destinationId]=destinationPile;
-			
-			let changes = [];
-			for(let i =0; i <this.#cardPiles.length; i++){
-				changes[i] = (i===sourceId||i===destinationId)?this.#cardPiles[i]:null;
+		if(this.#succesEnding===false)
+		{
+			let lastMove = this.#gameRoundHistory.previous();
+			if(lastMove!==null){
+				let source = lastMove.source;
+				let sourcePile = source.pile;
+				let sourceId = source.id;
+				this.#cardPiles[sourceId] = sourcePile;
+				let destination = lastMove.destination;
+				let destinationPile = destination.pile
+				let destinationId = destination.id;
+				this.#cardPiles[destinationId]=destinationPile;
+				
+				let changes = [];
+				for(let i =0; i <this.#cardPiles.length; i++){
+					changes[i] = (i===sourceId||i===destinationId)?this.#cardPiles[i]:null;
+				}
+				this.#fireModelChanged(changes)
 			}
-			this.#fireModelChanged(changes)
 		}
 		
 	}
