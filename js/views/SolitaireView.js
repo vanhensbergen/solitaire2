@@ -174,7 +174,6 @@ export default class SolitaireView extends EventTarget{
 		{
 			case 'modelwin':
 				this.#comment = "You have won!! Play on for bonus.";
-				console.log('have to find a nice expression for winning a game')
 			break; 
 			case 'modelchange':
 				this.#show(event.piles);
@@ -189,7 +188,7 @@ export default class SolitaireView extends EventTarget{
 				this.dispatchEvent(new ViewCardsDroppedEvent(pileId, cardId));
 			break;
 			case 'modelrollup':
-				this.#comment = "Enjoy the bonus.";
+				this.#comment = "Enjoy the bonus,winner!";
 				let roller = new RollUpHandler(event.sources, event.destinations);
 				roller.handleRollupEnded = ()=>{this.#comment = "Another game??"}
 
