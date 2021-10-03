@@ -66,6 +66,7 @@ export default class SolitaireGame extends EventTarget{
 	 * middels animatie te laten oprollen naar de eindstapels gerealiseerd is.
 	 * Deze conditie is dat de speelkaarten op de speeltafel op de eerste 4 rijen 
 	 * liggen klaar om verplaatst te worden naar de eindstapels. Dan moet het event gegenereerd worden.
+	 * is de event conditie voldaan danworden de 4 stapls in het model geleegd
 	 */
 	#testRollUpConditionMet(){
 		if(this.#succesEnding){
@@ -79,6 +80,9 @@ export default class SolitaireGame extends EventTarget{
 			}
 			if(condition){
 				this.#fireRollUpConditionMet();
+				for(let i=2; i<6; i++){
+					this.#cardPiles[i]=[];//maak alle speelveldstapels leeg anders blijf je risico hebben op dit gebeuren bij nogmaals klikken
+				}
 			}
 		}
 
